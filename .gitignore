@@ -12,7 +12,8 @@ playwright-report/
 test-results/
 *.log
 
-# Local AI agent instructions & handoff notes
+# Local AI agent instructions, CI workflows & handoff notes
+.github/
 .gemini/
 GEMINI.md
 GEMINI_HANDOFF.md
