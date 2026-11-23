@@ -1,0 +1,184 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+  runtime  = "bun"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+// All constrained values are String by policy. Never define Prisma enums.
+model User {
+  id              String    @id @default(uuid()) @db.Uuid
+  username        String?   @unique @db.VarChar(30)
+  usernameKey     String    @unique @db.VarChar(80)
+  email           String?   @unique @db.VarChar(320)
+  passwordHash    String?   @db.Text
+  displayName     String?   @db.VarChar(100)
+  bio             String?   @db.VarChar(500)
+  githubUrl       String?   @db.VarChar(255)
+  avatarKey       String?   @db.VarChar(512)
+  emailVerifiedAt DateTime?
+  deletedAt       DateTime?
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+  sessions        Session[]
+  authTokens      AuthToken[]
+  projects        Project[]
+  issues          Issue[]
+  comments        Comment[]
+  activities      IssueActivity[]
+  notifications   Notification[] @relation("NotificationRecipient")
+  sentNotifications Notification[] @relation("NotificationActor")
+
+  @@index([deletedAt])
+}
+
+model Session {
+  id                String    @id @default(uuid()) @db.Uuid
+  userId            String    @db.Uuid
+  tokenHash         String    @unique @db.Char(64)
+  expiresAt         DateTime
+  absoluteExpiresAt DateTime
+  lastActivityAt    DateTime  @default(now())
+  revokedAt         DateTime?
+  createdAt         DateTime  @default(now())
+  user              User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId, revokedAt])
+  @@index([expiresAt])
+}
+
+model AuthToken {
+  id           String    @id @default(uuid()) @db.Uuid
+  userId       String    @db.Uuid
+  tokenHash    String    @unique @db.Char(64)
+  purpose      String    @db.VarChar(40)
+  pendingEmail String?   @db.VarChar(320)
+  expiresAt    DateTime
+  usedAt       DateTime?
+  createdAt    DateTime  @default(now())
+  user         User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId, purpose])
+  @@index([expiresAt])
+}
+
+model Project {
+  id          String    @id @default(uuid()) @db.Uuid
+  slug        String    @unique @db.VarChar(60)
+  name        String    @db.VarChar(80)
+  description String?   @db.VarChar(300)
+  ownerId     String?   @db.Uuid
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  deletedAt   DateTime?
+  owner       User?     @relation(fields: [ownerId], references: [id], onDelete: SetNull)
+  issues      Issue[]
+
+  @@index([deletedAt, createdAt])
+  @@index([ownerId, deletedAt])
+}
+
+model Issue {
+  id                 String    @id @default(uuid()) @db.Uuid
+  issueNumber        Int?      @unique @default(dbgenerated("nextval('\"Issue_issueNumber_seq\"'::regclass)"))
+  projectId          String?   @db.Uuid
+  authorId           String?   @db.Uuid
+  title              String    @db.VarChar(150)
+  description        String    @db.Text
+  type               String    @db.VarChar(20)
+  status             String    @db.VarChar(20)
+  priority           String    @db.VarChar(20)
+  version            Int       @default(1)
+  clientRequestId    String?   @unique @db.Uuid
+  requestFingerprint String?   @db.Char(64)
+  createdAt          DateTime  @default(now())
+  updatedAt          DateTime  @updatedAt
+  deletedAt          DateTime?
+  purgedAt           DateTime?
+  project            Project?  @relation(fields: [projectId], references: [id], onDelete: SetNull)
+  author             User?     @relation(fields: [authorId], references: [id], onDelete: SetNull)
+  comments           Comment[]
+  attachments        IssueAttachment[]
+  activities         IssueActivity[]
+  notifications      Notification[]
+
+  @@index([deletedAt, createdAt])
+  @@index([projectId, deletedAt, createdAt])
+  @@index([status, deletedAt, createdAt])
+  @@index([authorId, deletedAt])
+  @@index([purgedAt])
+}
+
+model IssueAttachment {
+  id           String    @id @default(uuid()) @db.Uuid
+  issueId      String    @db.Uuid
+  storageKey   String?   @unique @db.VarChar(512)
+  originalName String    @db.VarChar(255)
+  mimeType     String    @db.VarChar(50)
+  sizeBytes    Int
+  status       String    @db.VarChar(20)
+  createdAt    DateTime  @default(now())
+  deletedAt    DateTime?
+  purgedAt     DateTime?
+  issue        Issue     @relation(fields: [issueId], references: [id], onDelete: Restrict)
+
+  @@index([issueId, deletedAt, status])
+  @@index([deletedAt, purgedAt])
+}
+
+model Comment {
+  id                 String    @id @default(uuid()) @db.Uuid
+  issueId            String    @db.Uuid
+  authorId           String?   @db.Uuid
+  content            String    @db.Text
+  clientRequestId    String?   @unique @db.Uuid
+  requestFingerprint String?   @db.Char(64)
+  createdAt          DateTime  @default(now())
+  updatedAt          DateTime  @updatedAt
+  deletedAt          DateTime?
+  purgedAt           DateTime?
+  issue              Issue     @relation(fields: [issueId], references: [id], onDelete: Restrict)
+  author             User?     @relation(fields: [authorId], references: [id], onDelete: SetNull)
+  notifications      Notification[]
+
+  @@index([issueId, createdAt, id])
+  @@index([authorId, deletedAt])
+  @@index([deletedAt, purgedAt])
+}
+
+model IssueActivity {
+  id             String    @id @default(uuid()) @db.Uuid
+  issueId        String    @db.Uuid
+  actorId        String?   @db.Uuid
+  eventType      String    @db.VarChar(40)
+  oldValue       String?   @db.VarChar(80)
+  newValue       String?   @db.VarChar(80)
+  createdAt      DateTime  @default(now())
+  auditExpiresAt DateTime?
+  issue          Issue     @relation(fields: [issueId], references: [id], onDelete: Restrict)
+  actor          User?     @relation(fields: [actorId], references: [id], onDelete: SetNull)
+
+  @@index([issueId, createdAt, id])
+  @@index([auditExpiresAt])
+}
+
+model Notification {
+  id          String    @id @default(uuid()) @db.Uuid
+  recipientId String    @db.Uuid
+  actorId     String?   @db.Uuid
+  issueId     String    @db.Uuid
+  commentId   String?   @unique @db.Uuid
+  type        String    @db.VarChar(40)
+  readAt      DateTime?
+  createdAt   DateTime  @default(now())
+  recipient   User      @relation("NotificationRecipient", fields: [recipientId], references: [id], onDelete: Cascade)
+  actor       User?     @relation("NotificationActor", fields: [actorId], references: [id], onDelete: SetNull)
+  issue       Issue     @relation(fields: [issueId], references: [id], onDelete: Restrict)
+  comment     Comment?  @relation(fields: [commentId], references: [id], onDelete: SetNull)
+
+  @@index([recipientId, readAt, createdAt])
+  @@index([recipientId, createdAt, id])
+}

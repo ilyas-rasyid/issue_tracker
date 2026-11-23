@@ -1,0 +1,31 @@
+{
+  "name": "mini-issue-tracker",
+  "private": true,
+  "workspaces": [
+    "apps/*"
+  ],
+  "scripts": {
+    "dev": "bun run --filter '*' dev",
+    "dev:web": "bun run --cwd apps/web dev",
+    "dev:api": "bun run --cwd apps/api dev",
+    "build": "bun run --cwd apps/api db:generate && bun run --cwd apps/web build && bun build apps/api/src/server.ts --target=bun --packages=external --outdir=apps/api/dist",
+    "typecheck": "bun run --cwd apps/web typecheck && bun run --cwd apps/api typecheck",
+    "test": "bun test apps/api/src",
+    "db:generate": "bun run --cwd apps/api db:generate",
+    "db:migrate": "bun run --cwd apps/api db:migrate",
+    "db:deploy": "bun run --cwd apps/api db:deploy",
+    "db:seed": "bun run --cwd apps/api db:seed",
+    "cleanup:dry": "bun run --cwd apps/api cleanup:dry",
+    "cleanup": "bun run --cwd apps/api cleanup",
+    "check:slop": "bash scripts/check-anti-slop.sh",
+    "test:e2e": "bun run --cwd apps/web test:e2e",
+    "format": "prettier --write \"**/*.{ts,tsx,js,jsx,json,css,md,yml,yaml}\"",
+    "format:check": "prettier --check \"**/*.{ts,tsx,js,jsx,json,css,md,yml,yaml}\""
+  },
+  "engines": {
+    "bun": ">=1.2.0"
+  },
+  "devDependencies": {
+    "prettier": "^3.6.2"
+  }
+}

@@ -1,0 +1,34 @@
+{
+  "name": "@tracker/api",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "bun --watch src/server.ts",
+    "start": "bun src/server.ts",
+    "db:generate": "bunx prisma generate",
+    "db:migrate": "bunx prisma migrate dev --name init",
+    "db:deploy": "bunx prisma migrate deploy",
+    "db:seed": "bun prisma/seed.ts",
+    "cleanup": "bun src/jobs/retention.ts",
+    "cleanup:dry": "bun src/jobs/retention.ts --dry-run",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@aws-sdk/client-s3": "^3.800.0",
+    "@prisma/adapter-pg": "^7.0.0",
+    "@prisma/client": "^7.0.0",
+    "elysia": "^1.3.0",
+    "nodemailer": "^7.0.0",
+    "pg": "^8.16.0",
+    "sharp": "^0.34.0",
+    "zod": "^4.0.0"
+  },
+  "devDependencies": {
+    "prisma": "^7.0.0",
+    "typescript": "^5.9.0",
+    "@types/nodemailer": "^7.0.0",
+    "@types/pg": "^8.15.0",
+    "@types/bun": "latest",
+    "dotenv": "^16.5.0"
+  }
+}

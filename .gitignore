@@ -1,0 +1,20 @@
+node_modules/
+dist/
+bun.lockb
+*.tsbuildinfo
+.env
+.env.*
+!.env.example
+.DS_Store
+apps/api/src/generated/
+coverage/
+playwright-report/
+test-results/
+*.log
+
+# Local AI agent instructions & handoff notes
+.gemini/
+GEMINI.md
+GEMINI_HANDOFF.md
+AGENTS.md
+VALIDATION_REPORT.md

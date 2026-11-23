@@ -1,0 +1,220 @@
+/* Feedback / dialogs */
+
+.notice {
+  padding: 12px 14px;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  background: var(--soft);
+  display: flex;
+  align-items: flex-start;
+  gap: 9px;
+  font-size: 13px;
+  margin: 12px 0;
+  color: var(--text);
+}
+
+.notice-error {
+  border-color: color-mix(in srgb, var(--danger) 35%, var(--line));
+  color: var(--danger);
+}
+
+.notice-success {
+  border-color: color-mix(in srgb, var(--success) 35%, var(--line));
+  color: var(--success);
+}
+
+.empty {
+  padding: 55px 20px;
+  text-align: center;
+  border: 1px dashed var(--line);
+  border-radius: 7px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.empty.compact {
+  padding: 20px 10px;
+  border: 0;
+}
+
+.empty-title {
+  font-weight: 650;
+}
+
+.empty p {
+  margin: 0;
+  font-size: 12px;
+}
+
+.skeleton-row {
+  height: 52px;
+  border-bottom: 1px solid var(--line);
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 8px 14px;
+}
+
+.skeleton-list {
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.skeleton-row > span:first-child {
+  width: 45px;
+  height: 11px;
+}
+
+.skeleton-row > span:last-child {
+  width: 70px;
+  height: 18px;
+  margin-left: auto;
+}
+
+.skeleton-row > div {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  flex: 1;
+}
+
+.skeleton-row > div span:first-child {
+  width: 60%;
+  height: 12px;
+}
+
+.skeleton-row > div span:last-child {
+  width: 30%;
+  height: 8px;
+}
+
+.skeleton-row span {
+  display: block;
+  background: var(--soft2);
+  border-radius: 3px;
+}
+
+.dialog {
+  padding: 22px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  max-width: min(430px, calc(100vw - 30px));
+  width: 100%;
+  background: var(--surface);
+  color: var(--text);
+  box-shadow: 0 20px 40px #0003;
+}
+
+.dialog::backdrop {
+  background: #0a112090;
+}
+
+.dialog-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.dialog-header h2 {
+  font-size: 17px;
+  margin: 0;
+}
+
+.dialog p {
+  font-size: 13px;
+  color: var(--muted);
+  line-height: 1.6;
+}
+
+.dialog-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  margin-top: 24px;
+}
+
+.dialog .stacked-form {
+  gap: 14px;
+}
+
+.popover-anchor {
+  position: relative;
+}
+
+.popover-dismiss {
+  position: fixed;
+  inset: 0;
+  border: 0;
+  background: transparent;
+  cursor: default;
+  z-index: 25;
+}
+
+.notification-popover {
+  position: absolute;
+  top: 40px;
+  right: -45px;
+  width: 385px;
+  max-height: min(500px, 70vh);
+  overflow: auto;
+  z-index: 26;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  box-shadow: 0 14px 38px #0002;
+}
+
+.notification-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 13px 14px;
+  border-bottom: 1px solid var(--line);
+}
+
+.notification-entry {
+  width: 100%;
+  text-align: left;
+  padding: 13px 14px;
+  border: 0;
+  border-bottom: 1px solid var(--line);
+  background: var(--surface);
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  gap: 4px;
+}
+
+.notification-entry.unread {
+  background: var(--soft);
+}
+
+.notification-entry:hover {
+  background: var(--hover);
+}
+
+.notification-entry strong {
+  font-size: 12px;
+  color: var(--text);
+}
+
+.notification-actor {
+  font-size: 12px;
+  color: var(--text);
+}
+
+.notification-entry small {
+  color: var(--subtle);
+}
+
+.popover-loading {
+  padding: 14px;
+  text-align: center;
+  color: var(--muted);
+  font-size: 12px;
+}

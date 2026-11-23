@@ -1,0 +1,10 @@
+node_modules/
+**/dist/
+**/build/
+**/coverage/
+**/generated/
+apps/api/src/generated/
+bun.lock
+*.zip
+.env
+**/.env
