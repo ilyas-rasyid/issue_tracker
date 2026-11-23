@@ -26,7 +26,11 @@ export function CreateProjectModal({ open, onClose }: { open: boolean; onClose: 
         name: name.trim(),
         description: description.trim() || null,
       });
-      await qc.invalidateQueries({ queryKey: queryKeys.projects });
+      qc.setQueryData<Project[]>(queryKeys.projects, (old) => {
+        const list = old || [];
+        return list.some((p) => p.id === created.id) ? list : [...list, created];
+      });
+      void qc.invalidateQueries({ queryKey: queryKeys.projects });
       setName('');
       setDescription('');
       onClose();
@@ -77,4 +81,3 @@ export function CreateProjectModal({ open, onClose }: { open: boolean; onClose: 
     </Modal>
   );
 }
-

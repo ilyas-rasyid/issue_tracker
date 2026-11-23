@@ -78,18 +78,12 @@ export const projectRoutes = new Elysia({ prefix: '/api/v1/projects' })
     });
   })
   .patch('/:slug', async ({ params, request }) => {
-    const user = await requireUser(request);
+    await requireUser(request, true);
     const data = validate(editProjectSchema, await request.json());
     const project = await prisma.project.findFirst({
       where: { slug: params.slug.toLowerCase(), deletedAt: null },
     });
     assert(project, 404, 'PROJECT_NOT_FOUND', 'Project not found');
-    assert(
-      project.ownerId === user.id,
-      403,
-      'NOT_PROJECT_OWNER',
-      'Only the project owner can edit',
-    );
 
     const updated = await prisma.project.update({
       where: { id: project.id },
@@ -105,17 +99,11 @@ export const projectRoutes = new Elysia({ prefix: '/api/v1/projects' })
     return { data: projectDto(updated) };
   })
   .delete('/:slug', async ({ params, request }) => {
-    const user = await requireUser(request);
+    await requireUser(request, true);
     const project = await prisma.project.findFirst({
       where: { slug: params.slug.toLowerCase(), deletedAt: null },
     });
     assert(project, 404, 'PROJECT_NOT_FOUND', 'Project not found');
-    assert(
-      project.ownerId === user.id,
-      403,
-      'NOT_PROJECT_OWNER',
-      'Only the project owner can delete',
-    );
     await prisma.$transaction(async (tx) => {
       await tx.issue.updateMany({
         where: { projectId: project.id },

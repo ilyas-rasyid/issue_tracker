@@ -35,13 +35,17 @@ export function Header() {
           <span>IssueTrack</span>
         </Link>
 
-        <nav className="desktop-nav" aria-label="Primary">
-          <NavLink to="/" end>
-            Issues
-          </NavLink>
-        </nav>
+        {user && (
+          <>
+            <nav className="desktop-nav" aria-label="Primary">
+              <NavLink to="/" end>
+                Issues
+              </NavLink>
+            </nav>
 
-        <HeaderProjectPicker />
+            <HeaderProjectPicker />
+          </>
+        )}
 
         <div className="header-actions">
           <ThemeSwitcher />

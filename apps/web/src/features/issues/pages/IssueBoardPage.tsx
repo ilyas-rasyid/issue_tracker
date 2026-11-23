@@ -15,6 +15,7 @@ import {
 import { useSession } from '../../../app/providers/SessionProvider';
 import { Badge, Button, Empty, LoadingRows, Notice } from '../../../shared/components/ui/index';
 import { KanbanBoard } from '../components/KanbanBoard';
+import { ProjectHeading } from '../../projects/components/ProjectHeading';
 export const sortOptions = [
   ['newest', 'Newest first'],
   ['oldest', 'Oldest first'],
@@ -128,10 +129,7 @@ export function Board() {
   return (
     <div className="page board-page">
       <div className="page-heading">
-        <div>
-          <h1>Issues</h1>
-          <p>Track bugs, features, and tasks across your projects.</p>
-        </div>
+        <ProjectHeading activeSlug={activeProject} />
         {user?.emailVerified ? (
           <Link
             className="button button-primary"

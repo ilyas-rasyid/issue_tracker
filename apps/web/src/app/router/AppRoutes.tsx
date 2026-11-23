@@ -60,7 +60,14 @@ export function App() {
         </div>
       )}
       <Routes>
-        <Route path="/" element={<Board />} />
+        <Route
+          path="/"
+          element={
+            <Protected>
+              <Board />
+            </Protected>
+          }
+        />
         <Route
           path="/issues/new"
           element={
@@ -69,7 +76,14 @@ export function App() {
             </Protected>
           }
         />
-        <Route path="/issues/:key" element={<IssueDetail />} />
+        <Route
+          path="/issues/:key"
+          element={
+            <Protected>
+              <IssueDetail />
+            </Protected>
+          }
+        />
 
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
@@ -77,7 +91,14 @@ export function App() {
         <Route path="/forgot-password" element={<ForgotPassword />} />
         <Route path="/reset-password" element={<ResetPassword />} />
 
-        <Route path="/u/:username" element={<PublicProfile />} />
+        <Route
+          path="/u/:username"
+          element={
+            <Protected>
+              <PublicProfile />
+            </Protected>
+          }
+        />
         <Route
           path="/settings"
           element={
