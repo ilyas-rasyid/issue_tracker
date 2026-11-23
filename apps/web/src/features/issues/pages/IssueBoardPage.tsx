@@ -15,7 +15,6 @@ import {
 import { useSession } from '../../../app/providers/SessionProvider';
 import { Badge, Button, Empty, LoadingRows, Notice } from '../../../shared/components/ui/index';
 import { KanbanBoard } from '../components/KanbanBoard';
-import { ProjectBar } from '../../projects/components/ProjectBar';
 export const sortOptions = [
   ['newest', 'Newest first'],
   ['oldest', 'Oldest first'],
@@ -146,8 +145,6 @@ export function Board() {
           </Link>
         ) : null}
       </div>
-
-      <ProjectBar activeSlug={activeProject} onSelect={(slug) => update('project', slug)} />
 
       <div className="issue-toolbar">
         <label className="search-box">

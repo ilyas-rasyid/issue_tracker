@@ -1,15 +1,20 @@
 import { useState } from 'react';
 import { Link, NavLink, useNavigate } from 'react-router-dom';
-import { ChevronDown, FilePlus2, GitPullRequest, LogOut, Settings, UserRound } from 'lucide-react';
+import { ChevronDown, FolderPlus, GitPullRequest, LogOut, Settings, UserRound } from 'lucide-react';
 import { Avatar } from '../../shared/components/ui/index';
 import { mutate } from '../../shared/api/index';
 import { useSession, broadcastAuth } from '../providers/SessionProvider';
 import { ThemeSwitcher } from '../components/ThemeSwitcher';
 import { Notifications } from '../../features/notifications/components/NotificationCenter';
+import { HeaderProjectPicker } from '../../features/projects/components/HeaderProjectPicker';
+import { CreateProjectModal } from '../../features/projects/components/CreateProjectModal';
+
 export function Header() {
-  const { user, logoutLocal } = useSession(),
-    nav = useNavigate();
+  const { user, logoutLocal } = useSession();
+  const nav = useNavigate();
   const [menu, setMenu] = useState(false);
+  const [projectModalOpen, setProjectModalOpen] = useState(false);
+
   async function logout() {
     try {
       await mutate('/auth/logout', 'POST');
@@ -19,6 +24,7 @@ export function Header() {
       nav('/');
     }
   }
+
   return (
     <header className="site-header">
       <div className="header-inner">
@@ -35,16 +41,25 @@ export function Header() {
           </NavLink>
         </nav>
 
+        <HeaderProjectPicker />
+
         <div className="header-actions">
           <ThemeSwitcher />
           {user ? (
             <>
-              <Link
-                className="header-new"
-                to={user.emailVerified ? '/issues/new' : '/verify-email'}
-              >
-                <FilePlus2 size={16} /> New issue
-              </Link>
+              {user.emailVerified ? (
+                <button
+                  type="button"
+                  className="header-new"
+                  onClick={() => setProjectModalOpen(true)}
+                >
+                  <FolderPlus size={16} /> New project
+                </button>
+              ) : (
+                <Link className="header-new" to="/verify-email">
+                  <FolderPlus size={16} /> New project
+                </Link>
+              )}
               <Notifications />
               <div className="account-menu">
                 <button
@@ -94,6 +109,8 @@ export function Header() {
           )}
         </div>
       </div>
+
+      <CreateProjectModal open={projectModalOpen} onClose={() => setProjectModalOpen(false)} />
     </header>
   );
 }

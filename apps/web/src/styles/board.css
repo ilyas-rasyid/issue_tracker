@@ -1,58 +1,9 @@
 /* Board and table density. */
 
-.project-bar {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 12px;
-  margin-bottom: 16px;
-  flex-wrap: wrap;
-}
-
-.project-list {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  flex-wrap: wrap;
-  flex: 1;
-  min-width: 0;
-}
-
-.project-pill {
-  height: 34px;
-  display: inline-flex;
-  align-items: center;
-  gap: 7px;
-  padding: 0 11px;
-  border: 1px solid var(--line);
-  border-radius: 6px;
-  background: var(--surface);
-  color: var(--muted);
-  font-size: 12px;
-  font-weight: 500;
-  white-space: nowrap;
-}
-
-.project-pill:hover {
-  background: var(--hover);
-  color: var(--text);
-}
-
-.project-pill.active {
-  background: var(--soft2);
-  border-color: var(--primary);
-  color: var(--text);
-  font-weight: 650;
-}
-
 .project-count {
   font-family: 'JetBrains Mono', monospace;
   font-size: 11px;
   color: var(--subtle);
-}
-
-.project-pill.active .project-count {
-  color: var(--primary);
 }
 
 .issue-toolbar {
