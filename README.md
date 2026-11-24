@@ -1,83 +1,75 @@
 # Mini Issue Tracker
 
-Developer-focused issue tracker with a React + Vite frontend, Bun + Elysia backend, Prisma/PostgreSQL database, and private object storage.
+Aplikasi pelacak isu, tiket bug, dan tugas pengembangan perangkat lunak (_issue & bug tracker_) ramah _developer_. Berfungsi untuk mengelola alur kerja multi-proyek, mencatat tiket masalah beserta tingkatan prioritas dan status progres, merekam riwayat aktivitas/perubahan (_audit activity_), serta menyimpan lampiran berkas secara aman menggunakan object storage.
 
-## Root folder structure
+---
 
-```text
-mini-issue-tracker/
-├── fe/             # frontend
-├── be/             # backend
-├── docs/           # PRD and architecture
-├── scripts/        # audit, bootstrap, etc.
-├── .prettierrc.json
-├── .editorconfig
-├── .vscode/
-├── AGENTS.md
-├── GEMINI_HANDOFF.md
-├── package.json
-└── docker-compose.yml
+## Prasyarat
+
+- [Bun](https://bun.sh/) (v1.2+)
+- [Docker & Docker Compose](https://docs.docker.com/compose/)
+
+---
+
+## Cara Menjalankan
+
+### 1. Install Dependensi
+
+```bash
+bun install
 ```
 
-Folder ownership, FE/BE feature examples, and conventions are in [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md). The layout follows **`contoh_fe(2).zip` and `contoh_be(2).zip`** at the architectural level, not the school domain.
+### 2. Setup Environment Variables
 
-## Setup (requires Bun, Docker, network to install packages)
+Salin konfigurasi environment untuk backend:
 
 ```bash
 cp be/.env.example be/.env
-# Fill in the local configuration and secrets in be/.env
-bun install
-bun run check:structure
-bun run format
-bun run format:check
-bun run db:generate
-bun run typecheck
-bun run build
 ```
 
-To run the app locally:
+### 3. Nyalakan Services Pendukung (Docker Compose)
+
+Nyalakan PostgreSQL, Silo (S3 Object Storage), dan Mailpit:
 
 ```bash
 docker compose up -d
-bun run db:migrate
-bun run dev:api
-# Second terminal
-bun run dev:web
 ```
 
-Open `http://localhost:5173`, API health at `http://localhost:3001/api/v1/health`, Mailpit at `http://localhost:8025`.
+### 4. Setup Database & Seeding Data
 
-## Primary commands
+Generate Prisma client, jalankan migrasi database, lalu buat akun demo awal:
 
-| Script                    | Purpose                                 |
-| ------------------------- | --------------------------------------- |
-| `bun run dev:web`         | Vite dev frontend (`fe`)                |
-| `bun run dev:api`         | Elysia dev backend (`be`)               |
-| `bun run build`           | Generate Prisma client, build FE and BE |
-| `bun run typecheck`       | Check both TypeScript projects          |
-| `bun run test`            | Backend Bun unit tests                  |
-| `bun run test:e2e`        | Playwright browser smoke tests          |
-| `bun run db:generate`     | Generate Prisma client locally          |
-| `bun run db:migrate`      | Apply development migration             |
-| `bun run cleanup:dry`     | Inspect retention cleanup               |
-| `bun run check:structure` | Guard folder layout and file size       |
-| `bun run format`          | Apply canonical Prettier formatting     |
-| `bun run format:check`    | Verify Prettier formatting              |
+```bash
+bun run db:generate
+bun run db:migrate
 
-## Code standards
+# Jalankan seeder akun demo
+SEED_DEMO_PASSWORD='DemoPassword123!' bun run db:seed
+```
 
-- **FE**: `app`, `routes`, `features`, `shared`, feature-specific `components / hooks / services / schemas / types`.
-- **BE**: `commons`, `security`, `infrastructure`, `features`, separate route groups/handler and service/repository when applicable.
-- Max **300 handwritten lines per TS/TSX/CSS file**, enforced by `bun run check:structure`.
-- Prettier config at root: 2-space indent, 100 print width, multiline JSX, `formatOnSave` supported in Antigravity/VS Code.
-- No Prisma enums; constrained data values are backend constants.
-- No generic AI-dashboard decoration. See `DESIGN.md`.
-- Do not include `.env`, `node_modules`, generated Prisma client, or `dist` in Git.
+### 5. Jalankan Aplikasi
 
-## Scope note from the supplied source
+Jalankan backend API dan frontend web secara bersamaan:
 
-The uploaded `mini-issue-tracker.zip` contains a **Project** feature and a corresponding Prisma table, for **9 models total**. The earlier frozen Master PRD had 8 models and a single board. Since this request is to fix folder organization/formatter **without deleting code**, that preexisting Project functionality has been preserved. The difference is documented and should be addressed separately only with explicit approval.
+```bash
+bun run dev
+```
 
-## Verification status
+_(Atau dapat dijalankan di dua terminal terpisah: `bun run dev:api` dan `bun run dev:web`)._
 
-The refactor passed offline **source syntax**, **relative import**, **file length**, **Prisma no-enum**, and archive checks. The machine used for refactoring does **not have Bun or registry access**, so **`bun run build`, Prisma migration, and integration tests are not yet verified**. Gemini/Antigravity should execute them and report real results before claiming ready-to-run. See [`VALIDATION_REPORT.md`](VALIDATION_REPORT.md).
+- **Frontend Web**: [http://localhost:5173](http://localhost:5173)
+- **Backend API**: [http://localhost:3001](http://localhost:3001)
+- **Mailpit Web UI (Dev Inbox)**: [http://localhost:8025](http://localhost:8025)
+- **S3 Storage Console**: [http://localhost:9001](http://localhost:9001)
+
+---
+
+## Akun Demo Login
+
+Akun bawaan hasil _seed_:
+
+- **Email**: `demo@localhost.test`
+- **Username**: `demo_developer`
+- **Password**: Sesuai yang dimasukkan pada variabel `SEED_DEMO_PASSWORD` saat _seeding_ (contoh: `DemoPassword123!`).
+
+_(Catatan: Anda juga dapat membuat akun baru secara langsung melalui menu pendaftaran / register di halaman web)._
