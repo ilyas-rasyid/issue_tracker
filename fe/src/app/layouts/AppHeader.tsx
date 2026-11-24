@@ -1,7 +1,7 @@
 import { useState } from 'react';
-import { Link, NavLink, useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { ChevronDown, FolderPlus, GitPullRequest, LogOut, Settings, UserRound } from 'lucide-react';
-import { Avatar } from '../../shared/components/ui/index';
+import { Avatar, Button, Modal } from '../../shared/components/ui/index';
 import { useSession, broadcastAuth } from '../providers/SessionProvider';
 import { ThemeSwitcher } from '../components/ThemeSwitcher';
 import { Notifications } from '../../features/notifications/components/NotificationCenter';
@@ -14,13 +14,18 @@ export function Header() {
   const nav = useNavigate();
   const [menu, setMenu] = useState(false);
   const [projectModalOpen, setProjectModalOpen] = useState(false);
+  const [logoutModalOpen, setLogoutModalOpen] = useState(false);
+  const [logoutBusy, setLogoutBusy] = useState(false);
 
-  async function logout() {
+  async function handleLogout() {
+    setLogoutBusy(true);
     try {
       await logoutUser();
     } finally {
       logoutLocal();
       broadcastAuth('logout');
+      setLogoutBusy(false);
+      setLogoutModalOpen(false);
       nav('/');
     }
   }
@@ -34,12 +39,6 @@ export function Header() {
           </span>
           <span>IssueTrack</span>
         </Link>
-
-        <nav className="desktop-nav" aria-label="Primary">
-          <NavLink to="/" end>
-            Issues
-          </NavLink>
-        </nav>
 
         <HeaderProjectPicker />
 
@@ -88,11 +87,10 @@ export function Header() {
                       <Settings size={15} /> Settings
                     </Link>
                     <button
+                      type="button"
                       onClick={() => {
                         setMenu(false);
-                        logout().catch(() => {
-                          // Best-effort cleanup
-                        });
+                        setLogoutModalOpen(true);
                       }}
                     >
                       <LogOut size={15} /> Log out
@@ -113,6 +111,34 @@ export function Header() {
       </div>
 
       <CreateProjectModal open={projectModalOpen} onClose={() => setProjectModalOpen(false)} />
+
+      <Modal
+        open={logoutModalOpen}
+        title="Log out"
+        description="Are you sure you want to log out of your account?"
+        onClose={() => {
+          if (!logoutBusy) setLogoutModalOpen(false);
+        }}
+      >
+        <div className="dialog-actions">
+          <Button
+            variant="secondary"
+            type="button"
+            disabled={logoutBusy}
+            onClick={() => setLogoutModalOpen(false)}
+          >
+            Cancel
+          </Button>
+          <Button
+            variant="danger"
+            type="button"
+            busy={logoutBusy}
+            onClick={handleLogout}
+          >
+            Log out
+          </Button>
+        </div>
+      </Modal>
     </header>
   );
 }

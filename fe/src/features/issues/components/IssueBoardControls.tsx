@@ -48,11 +48,11 @@ export function IssueBoardControls({
         )}
       </div>
       <div className="view-switch" role="group" aria-label="Issue view">
-        <button onClick={() => setView('list')} aria-pressed={view === 'list'}>
-          <ListIcon size={16} /> List
-        </button>
         <button onClick={() => setView('board')} aria-pressed={view === 'board'}>
           <Columns3 size={16} /> Board
+        </button>
+        <button onClick={() => setView('list')} aria-pressed={view === 'list'}>
+          <ListIcon size={16} /> List
         </button>
       </div>
     </div>

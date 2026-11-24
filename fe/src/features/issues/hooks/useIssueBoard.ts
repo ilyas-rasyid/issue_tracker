@@ -12,7 +12,7 @@ export function useIssueBoard() {
   const query = params.toString();
   const viewOverride = params.get('view');
   const [preferred, setPreferred] = useState<'list' | 'board'>(() =>
-    localStorage.getItem('tracker-view') === 'board' ? 'board' : 'list',
+    localStorage.getItem('tracker-view') === 'list' ? 'list' : 'board',
   );
   const view = viewOverride === 'board' || viewOverride === 'list' ? viewOverride : preferred;
   const [search, setSearch] = useState(params.get('search') || '');

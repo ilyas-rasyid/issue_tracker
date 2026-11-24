@@ -1,8 +1,8 @@
 import { test, expect } from '@playwright/test';
-test('public board opens in List view and has usable search', async ({ page }) => {
+test('public board opens in Board view and has usable search', async ({ page }) => {
   await page.goto('/');
   await expect(page.getByRole('heading', { name: 'Issues', exact: true })).toBeVisible();
-  await expect(page.getByRole('button', { name: 'List' })).toHaveAttribute('aria-pressed', 'true');
+  await expect(page.getByRole('button', { name: 'Board' })).toHaveAttribute('aria-pressed', 'true');
   await expect(page.getByRole('textbox', { name: 'Search issues' })).toBeVisible();
   await page.getByRole('textbox', { name: 'Search issues' }).fill('login');
   await expect(page).toHaveURL(/search=login/);
