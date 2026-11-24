@@ -1,0 +1,101 @@
+.issue-table-wrap {
+  width: 100%;
+  overflow-x: auto;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+}
+
+.issue-table {
+  border-collapse: collapse;
+  width: 100%;
+  table-layout: fixed;
+}
+
+.issue-table thead {
+  background: var(--soft);
+  color: var(--muted);
+  font-size: 11px;
+  text-transform: none;
+}
+
+.issue-table th {
+  font-weight: 600;
+  text-align: left;
+  padding: 10px 15px;
+  border-bottom: 1px solid var(--line);
+}
+
+.issue-table th:first-child {
+  width: 48%;
+}
+
+.issue-table th:nth-child(2) {
+  width: 16%;
+}
+
+.issue-table th:nth-child(3) {
+  width: 12%;
+}
+
+.issue-table th:nth-child(4) {
+  width: 12%;
+}
+
+.issue-table th:nth-child(5) {
+  width: 12%;
+}
+
+.issue-table td {
+  height: 52px;
+  border-bottom: 1px solid var(--line);
+  padding: 6px 15px;
+  vertical-align: middle;
+}
+
+.issue-table tbody tr:last-child td {
+  border-bottom: 0;
+}
+
+.issue-table tbody tr:hover {
+  background: var(--hover);
+}
+
+.issue-cell {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.issue-key {
+  font-size: 11px;
+  color: var(--subtle);
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.issue-type {
+  font-family: 'Geist', system-ui, sans-serif;
+  margin-left: 6px;
+  text-transform: lowercase;
+  color: var(--muted);
+}
+
+.issue-title {
+  font-weight: 600;
+  color: var(--text);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-size: 13px;
+}
+
+.issue-cell:hover .issue-title {
+  color: var(--primary);
+}
+
+.table-author {
+  color: var(--muted);
+  font-size: 12px;
+  white-space: nowrap;
+}

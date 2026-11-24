@@ -316,9 +316,9 @@ Repository conceptual:
 
 ```text
 mini-issue-tracker/
-  apps/web/src/{app,pages,features,components,lib,styles}/
-  apps/api/prisma/{schema.prisma,migrations}/
-  apps/api/src/{config,commons,modules,jobs,generated}/
+  fe/src/{app,pages,features,components,lib,styles}/
+  be/prisma/{schema.prisma,migrations}/
+  be/src/{config,commons,modules,jobs,generated}/
   packages/api-contract/          # Generated contract types if selected in setup
   .github/workflows/
   docker-compose.yml

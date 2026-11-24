@@ -1,0 +1,61 @@
+@media (max-width: 1023px) {
+  .detail-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .metadata-panel {
+    position: static;
+    order: -1;
+  }
+  .detail-content {
+    order: 2;
+  }
+  .metadata-inner {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+  .metadata-inner h2 {
+    width: 100%;
+    margin-bottom: 1px;
+  }
+  .metadata-inner .property {
+    grid-template-columns: auto auto;
+    margin: 0 15px 0 0;
+    gap: 6px;
+  }
+  .owner-controls {
+    width: 100%;
+    flex-direction: row;
+    flex-wrap: wrap;
+    border-top: 1px solid var(--line);
+    margin: 0;
+  }
+  .owner-controls h3 {
+    width: 100%;
+  }
+  .sidebar-lock {
+    width: 100%;
+  }
+  .issue-toolbar {
+    align-items: stretch;
+    flex-direction: column;
+  }
+  .search-box {
+    flex: auto;
+    min-width: 100%;
+  }
+  .filter-row select {
+    flex: 1;
+    max-width: none;
+  }
+  .kanban {
+    grid-auto-flow: column;
+    grid-auto-columns: 260px;
+    grid-template-columns: none;
+  }
+  .settings-layout {
+    grid-template-columns: 165px minmax(0, 1fr);
+    gap: 25px;
+  }
+}

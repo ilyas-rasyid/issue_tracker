@@ -8,7 +8,7 @@
         "prettier": "^3.6.2",
       },
     },
-    "apps/api": {
+    "be": {
       "name": "@tracker/api",
       "dependencies": {
         "@aws-sdk/client-s3": "^3.800.0",
@@ -29,7 +29,7 @@
         "typescript": "^5.9.0",
       },
     },
-    "apps/web": {
+    "fe": {
       "name": "@tracker/web",
       "dependencies": {
         "@hookform/resolvers": "^5.0.0",
@@ -412,9 +412,9 @@
 
     "@tokenizer/token": ["@tokenizer/token@0.3.0", "", {}, "sha512-OvjF+z51L3ov0OyAU0duzsYuvO01PH7x4t6DJx+guahgTnBHkhJdG7soQeTSFLWN3efnHyibZ4Z8l2EuWwJN3A=="],
 
-    "@tracker/api": ["@tracker/api@workspace:apps/api"],
+    "@tracker/api": ["@tracker/api@workspace:be"],
 
-    "@tracker/web": ["@tracker/web@workspace:apps/web"],
+    "@tracker/web": ["@tracker/web@workspace:fe"],
 
     "@types/babel__core": ["@types/babel__core@7.20.5", "", { "dependencies": { "@babel/parser": "^7.20.7", "@babel/types": "^7.20.7", "@types/babel__generator": "*", "@types/babel__template": "*", "@types/babel__traverse": "*" } }, "sha512-qoQprZvz5wQFJwMDqeseRXWv3rqMvhgpbXFfVyWhbx9X47POIA6i/+dXefEmZKoAgOaTdaIgNSMqMIU61yRyzA=="],
 

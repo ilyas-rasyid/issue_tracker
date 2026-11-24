@@ -2,25 +2,28 @@
   "name": "mini-issue-tracker",
   "private": true,
   "workspaces": [
-    "apps/*"
+    "fe",
+    "be"
   ],
   "scripts": {
     "dev": "bun run --filter '*' dev",
-    "dev:web": "bun run --cwd apps/web dev",
-    "dev:api": "bun run --cwd apps/api dev",
-    "build": "bun run --cwd apps/api db:generate && bun run --cwd apps/web build && bun build apps/api/src/server.ts --target=bun --packages=external --outdir=apps/api/dist",
-    "typecheck": "bun run --cwd apps/web typecheck && bun run --cwd apps/api typecheck",
-    "test": "bun test apps/api/src",
-    "db:generate": "bun run --cwd apps/api db:generate",
-    "db:migrate": "bun run --cwd apps/api db:migrate",
-    "db:deploy": "bun run --cwd apps/api db:deploy",
-    "db:seed": "bun run --cwd apps/api db:seed",
-    "cleanup:dry": "bun run --cwd apps/api cleanup:dry",
-    "cleanup": "bun run --cwd apps/api cleanup",
+    "dev:web": "bun run --cwd fe dev",
+    "dev:api": "bun run --cwd be dev",
+    "build": "bun run --cwd be db:generate && bun run --cwd fe build && bun build be/src/server.ts --target=bun --packages=external --outdir=be/dist",
+    "typecheck": "bun run --cwd fe typecheck && bun run --cwd be typecheck",
+    "test": "bun run --cwd be test",
+    "db:generate": "bun run --cwd be db:generate",
+    "db:migrate": "bun run --cwd be db:migrate",
+    "db:deploy": "bun run --cwd be db:deploy",
+    "db:seed": "bun run --cwd be db:seed",
+    "cleanup:dry": "bun run --cwd be cleanup:dry",
+    "cleanup": "bun run --cwd be cleanup",
     "check:slop": "bash scripts/check-anti-slop.sh",
-    "test:e2e": "bun run --cwd apps/web test:e2e",
-    "format": "prettier --write \"**/*.{ts,tsx,js,jsx,json,css,md,yml,yaml}\"",
-    "format:check": "prettier --check \"**/*.{ts,tsx,js,jsx,json,css,md,yml,yaml}\""
+    "test:e2e": "bun run --cwd fe test:e2e",
+    "format": "prettier --write \"{fe,be,scripts}/**/*.{ts,tsx,js,jsx,json,css,md,yml,yaml}\" \"*.{json,md,yml,yaml}\"",
+    "format:check": "prettier --check \"{fe,be,scripts}/**/*.{ts,tsx,js,jsx,json,css,md,yml,yaml}\" \"*.{json,md,yml,yaml}\"",
+    "check:structure": "node scripts/check-structure.mjs",
+    "check:quality": "bun run check:structure && bun run format:check && bun run typecheck && bun run build"
   },
   "engines": {
     "bun": ">=1.2.0"

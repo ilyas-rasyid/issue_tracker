@@ -1,95 +1,94 @@
-# Architecture & File Responsibilities
+# Mini Issue Tracker — Architecture and Ownership
 
-This structure follows the **organizational pattern** of the two user-provided references (`fe(8).zip` and `be_sekolah.zip`). Their business logic, dependencies, database model, and UI were **not copied**. Mini Issue Tracker remains a compact single-board product.
+This layout follows the **organization principles in `contoh_fe(2).zip` and `contoh_be(2).zip`** rather than copying their school-domain implementation. The workspace roots are deliberately named **`fe/` and `be/`**.
 
-## Frontend — `apps/web/src`
-
-```text
-app/
-  router/AppRoutes.tsx           Routes and authentication guards
-  query/query-client.ts         One TanStack Query client and retry policy
-  layouts/AppHeader.tsx         Shared top navigation
-  components/ThemeSwitcher.tsx  System/light/dark selection
-  providers/SessionProvider.tsx Browser session state
-features/
-  auth/pages/                   Login, register, verify, reset screens
-  issues/pages/                 Board, detail, create/edit form
-  issues/components/            Issue-focused components
-  comments/components/          Issue discussion
-  activities/components/        Read-only activity timeline
-  attachments/components/       Image management
-  notifications/components/     Bell and notification center
-  users/pages/                  Public developer profile
-  account/pages/                Profile/security/deletion settings
-shared/
-  api/client.ts                 HTTP, CSRF and error adaptation
-  api/types.ts                  Public client data types
-  api/query-keys.ts             Consistent query key naming
-  api/format.ts                 Display formatting/labels
-  components/ui/                Reusable controls, one component per file
-  components/markdown/          GFM rendering/editor
-styles/
-  tokens.css                    Theme tokens
-  base.css                      Typography & reset
-  layout.css                    Header, page layout, buttons
-  board.css                     List & Kanban
-  issue-detail.css              Detail, discussion & activity
-  forms.css                     Forms and Markdown editor
-  feedback.css                  Dialogs, notices, skeletons
-  account.css                   Login, profile, settings
-  responsive.css                Breakpoints and reduced motion
-main.tsx                        App bootstrap only
-```
-
-Page modules should compose other components rather than contain all their implementation. Keep the UI compact: no promotional hero, fake dashboard, glassmorphism, or purple gradients.
-
-## Backend — `apps/api/src`
+## Repository
 
 ```text
-commons/
-  constants/domain.constants.ts  String + TypeScript constants; NO Prisma enums
-  validation/schemas.ts         Zod request schemas
-  errors/                       AppError + Problem Details
-  pagination/                   Opaque cursors and page parameters
-  mappers/                      Public identity DTOs
-  security/crypto.ts            Hashes, opaque tokens, username fingerprint
-  utils/                        Time and public issue identifiers
-security/
-  csrf.ts                       Cookie settings, CSRF validation
-  session.ts                    Login session checking
-  rate-limit.ts                 Lightweight limiter
-infrastructure/
-  database/prisma.ts            Prisma Client singleton
-  database/locks.ts             Transactional row locks
-  email/mailer.ts               Email provider adapter
-  storage/object-storage.ts     S3 operations
-  storage/image-processing.ts   Image validation and conversion
-features/
-  auth/handler/                 HTTP auth routes
-  auth/service/                 Verification/reset token workflows
-  issues/handler/               Separate read and write route groups
-  issues/service/               Issue queries + response mapping
-  comments/handler/             Comment routes, permission checks
-  activities/handler/           Read-only history
-  attachments/handler/          Upload proxy and file serving
-  notifications/handler/        Bell, unread, read actions
-  account/handler/              Settings/deletion routes
-  users/handler/                Public profile + avatar endpoints
-jobs/retention.ts               Scheduled cleanup CLI
-lib/                           Small compatibility re-export barrels only
-server.ts                       Elysia initialization and global middleware
+mini-issue-tracker/
+├── fe/                       # React + Vite (standalone frontend)
+│   ├── src/
+│   │   ├── app/              # Global providers, layout, TanStack Query
+│   │   ├── routes/           # React Router route table and access guards
+│   │   ├── features/         # UI and business interactions grouped by feature
+│   │   │   ├── issues/
+│   │   │   │   ├── pages/     # Route-level page composition
+│   │   │   │   ├── components/# Pure visual sections; no unrelated operations
+│   │   │   │   ├── hooks/     # Query, form, draft, upload orchestration
+│   │   │   │   ├── schemas/   # Validation for forms
+│   │   │   │   ├── types/     # Feature-specific types
+│   │   │   │   └── constants/# Sorting and UI choices
+│   │   │   ├── comments/     # Comment UI + useComments hook
+│   │   │   ├── account/      # Profile, Security, Delete Account separated
+│   │   │   ├── auth/
+│   │   │   ├── activities/
+│   │   │   ├── attachments/
+│   │   │   ├── notifications/
+│   │   │   ├── users/
+│   │   │   └── projects/     # Present in uploaded latest source; see scope note
+│   │   ├── shared/           # Reusable HTTP client, types, utilities and basic UI
+│   │   ├── styles/           # Scoped CSS split into sub-300-line files
+│   │   └── main.tsx
+│   └── tests/
+├── be/                       # Bun + Elysia (standalone backend)
+│   ├── prisma/               # Schema, migrations, seed (source of truth)
+│   ├── src/
+│   │   ├── commons/          # Typed constants, Zod schemas, errors, utilities
+│   │   ├── security/         # Authentication session, CSRF, rate limit
+│   │   ├── infrastructure/   # Prisma client, PostgreSQL locks, mail, storage
+│   │   ├── features/
+│   │   │   ├── auth/
+│   │   │   │   ├── handler/   # Session, registration and password routes
+│   │   │   │   └── service/   # One-time auth token and delivery logic
+│   │   │   ├── issues/
+│   │   │   │   ├── handler/   # Create, read, update, status and delete routes
+│   │   │   │   └── service/   # Issue read/query and response mapping
+│   │   │   ├── comments/
+│   │   │   ├── account/
+│   │   │   ├── activities/
+│   │   │   ├── attachments/
+│   │   │   ├── notifications/
+│   │   │   ├── users/
+│   │   │   └── projects/
+│   │   ├── jobs/             # Retention cleanup CLI, not a web route
+│   │   └── server.ts
+│   └── tests/unit/
+├── scripts/                  # Maintenance and structural audits
+├── docs/                     # Product PRD and developer notes
+├── .prettierrc.json
+├── .editorconfig
+├── .vscode/settings.json
+├── AGENTS.md
+├── GEMINI_HANDOFF.md
+└── package.json              # Bun workspaces: fe + be
 ```
 
-### Rules for every new file
+## File responsibility rules
 
-1. Prefer a single named responsibility; no multi-feature mega-pages or files with hundreds of compressed operations.
-2. **Target <=300 handwritten source lines per file**. If it grows, split by domain behavior, never artificially split a function just to hit a number. Generated Prisma files are excluded.
-3. No mass one-line JSX, route chains, or CSS selectors; run `bun run format` after edits and `bun run format:check` before handoff.
-4. Backend owns permissions, input constraints, and domain constants. Do not move ownership logic into frontend alone.
-5. No Prisma enum. No new role/workspace/projects. Keep the frozen Master PRD scope.
-6. Every external I/O or mutation must have explicit success, error, and authorization behavior.
-7. Preserve the existing API paths and shapes when refactoring; add tests for behavioral changes.
+| Layer | Allowed responsibility | Must not contain |
+|---|---|---|
+| FE page | Compose feature sections and loading/error state | Huge data mutation + complex uploader + giant JSX |
+| FE component | Render one interactive surface | Unrelated pages and domain workflows |
+| FE hook | Own feature state, React Query, or form workflow | Large decorative JSX trees |
+| FE service | Call a typed API endpoint | React markup, global layout |
+| FE schema/type | Form validation, TypeScript contracts | Network requests |
+| BE handler | Elysia route + request/response boundary | Several unrelated domains in one file |
+| BE service | Business rules, orchestration, transactions | Frontend UI or CSS |
+| BE repository | Complicated/reusable persistence queries **when needed** | Business UI, unnecessary wrappers |
+| BE payload | Validation and request/response shapes | Persisted state mutation |
+| Infrastructure | External integrations or database setup | HTTP feature routing |
 
-### Build / runtime validation
+The reference backend has `handler / service / repository / payload`. **Do not create a repository just to forward one query**. Split substantial logic out of route handlers into services as the code evolves, keeping behavior and tests intact. `commons` owns business constants and cross-cutting validation; there is no generic `lib/core.ts` mega-export.
 
-These files were reorganized and statically parsed in an environment without Bun or npm registry network access. Do not interpret static validation as a successful Prisma migration or production build. Run the commands in `GEMINI_HANDOFF.md` on the developer workstation before declaring the build ready.
+## Formatting contract
+
+- **All handwritten `.ts`, `.tsx`, `.css` files must be under 300 lines.** Generated Prisma output is exempt and gitignored.
+- Format with **Prettier**, 2 spaces, 100-column target, LF endings; nested JSX attributes and conditional bodies should be multiline.
+- Use braces for all `if`, `for`, `while`, and `else` branches; do not squeeze bodies after control statements.
+- Root `.prettierrc.json`, `.editorconfig` and `.vscode/settings.json` are committed. `bun run format` and `bun run format:check` are mandatory once dependencies are installed.
+- `bun run check:structure` checks folder names, file size, local imports, collapsed JSX returns, and forbidden Prisma enums.
+- `bun run build` is **not yet verified** in this environment; run it on a machine with Bun and dependencies.
+
+## Scope consistency note
+
+The **uploaded `mini-issue-tracker.zip` contains a `Project` Prisma model, projects endpoints, and projects UI**. It therefore has **9 Prisma models**, unlike the earlier 8-model single-board Master PRD. This refactor preserves the latest uploaded source to avoid silently deleting functionality or changing migrations. Resolving this PRD-vs-source difference is a **separate product decision**, not a folder/formatting change. Do not make the difference worse or add new modules without approval.

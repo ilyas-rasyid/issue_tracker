@@ -1,0 +1,82 @@
+/* Layout: information-first, no decorative dashboard cards. */
+
+.site-header {
+  height: 62px;
+  border-bottom: 1px solid var(--line);
+  position: relative;
+  z-index: 10;
+  background: var(--surface);
+}
+
+.header-inner {
+  max-width: 1200px;
+  padding: 0 28px;
+  height: 100%;
+  margin: auto;
+  display: flex;
+  align-items: center;
+  gap: 32px;
+}
+
+.brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  white-space: nowrap;
+  font-weight: 700;
+  font-size: 16px;
+  letter-spacing: -0.045em;
+}
+
+.brand-icon {
+  display: grid;
+  place-items: center;
+  color: var(--primary);
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  width: 30px;
+  height: 30px;
+}
+
+.desktop-nav {
+  height: 100%;
+  display: flex;
+  align-items: center;
+}
+
+.desktop-nav a {
+  display: grid;
+  align-items: center;
+  height: 100%;
+  font-weight: 500;
+  color: var(--muted);
+  padding: 0 12px;
+  border-bottom: 2px solid transparent;
+}
+
+.desktop-nav a.active {
+  color: var(--text);
+  border-bottom-color: var(--primary);
+}
+
+.header-actions {
+  display: flex;
+  align-items: center;
+  margin-left: auto;
+  gap: 14px;
+}
+
+.header-new {
+  height: 34px;
+  border: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  border-radius: 5px;
+  background: var(--primary);
+  color: var(--primary-text);
+  font-weight: 600;
+  padding: 0 13px;
+  font-size: 12px;
+}

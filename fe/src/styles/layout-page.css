@@ -1,0 +1,89 @@
+.verification-strip {
+  background: var(--soft);
+  border-bottom: 1px solid var(--line);
+  padding: 8px 20px;
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  font-size: 12px;
+}
+
+.verification-strip a {
+  color: var(--primary);
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.site-footer {
+  max-width: 1200px;
+  margin: 70px auto 0;
+  padding: 26px 28px 42px;
+  border-top: 1px solid var(--line);
+  display: flex;
+  justify-content: space-between;
+  color: var(--subtle);
+  font-size: 12px;
+}
+
+.page {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 38px 28px 60px;
+  min-height: calc(100vh - 180px);
+}
+
+.narrow-page {
+  max-width: 870px;
+}
+
+.page-heading {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 20px;
+  margin-bottom: 26px;
+}
+
+.page-heading h1 {
+  margin-bottom: 5px;
+  overflow-wrap: anywhere;
+}
+
+.project-heading-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.project-heading-title h1 {
+  margin-bottom: 5px;
+}
+
+.project-heading-actions {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 5px;
+}
+
+.project-heading-actions .button {
+  min-height: 30px;
+  padding: 4px 10px;
+  font-size: 12px;
+}
+
+.icon-button-danger:hover {
+  color: var(--danger);
+  background: color-mix(in srgb, var(--danger) 8%, var(--surface));
+}
+
+.page-heading p {
+  font-size: 13px;
+  color: var(--muted);
+  margin: 0;
+}
+
+.page-heading .button {
+  flex: none;
+}

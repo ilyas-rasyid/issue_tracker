@@ -1,0 +1,72 @@
+/* Issue detail */
+
+.detail-hero {
+  margin-bottom: 27px;
+}
+
+.detail-hero h1 {
+  font-size: 27px;
+  max-width: 900px;
+  margin: 7px 0 12px;
+  overflow-wrap: anywhere;
+}
+
+.detail-byline {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.actor-link {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text);
+}
+
+.actor-link:hover {
+  color: var(--primary);
+}
+
+.detail-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 288px;
+  gap: 24px;
+  align-items: start;
+}
+
+.detail-content {
+  min-width: 0;
+}
+
+.detail-section {
+  padding: 0 0 24px;
+  margin: 0 0 24px;
+  border-bottom: 1px solid var(--line);
+}
+
+.section-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 18px;
+}
+
+.section-heading h2 {
+  margin: 0;
+  display: inline-flex;
+  align-items: baseline;
+  gap: 8px;
+}
+
+.section-heading h2 .muted {
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.section-heading .button {
+  min-height: 31px;
+  font-size: 12px;
+}

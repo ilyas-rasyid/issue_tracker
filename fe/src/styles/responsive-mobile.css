@@ -1,0 +1,231 @@
+@media (max-width: 639px) {
+  h1 {
+    font-size: 24px;
+  }
+  .page {
+    padding: 25px 16px 45px;
+    min-height: calc(100vh - 160px);
+  }
+  .header-inner {
+    padding: 0 14px;
+    gap: 12px;
+  }
+  .site-header {
+    height: 58px;
+  }
+  .desktop-nav {
+    display: none;
+  }
+  .brand {
+    font-size: 14px;
+  }
+  .brand-icon {
+    width: 27px;
+    height: 27px;
+  }
+  .header-actions {
+    gap: 7px;
+  }
+  .header-new {
+    font-size: 0;
+    width: 33px;
+    height: 33px;
+    padding: 0;
+  }
+  .header-new svg {
+    flex: none;
+  }
+  .auth-links {
+    gap: 7px;
+    font-size: 11px;
+  }
+  .auth-links .header-new {
+    font-size: 11px;
+    width: auto;
+    padding: 0 10px;
+  }
+  .theme-control {
+    padding: 2px;
+    gap: 0;
+  }
+  .theme-control button {
+    width: 25px;
+    height: 27px;
+  }
+  .site-footer {
+    margin-top: 20px;
+    padding: 23px 16px;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+  .verification-strip {
+    justify-content: space-between;
+    text-align: left;
+    padding: 9px 15px;
+    gap: 10px;
+  }
+  .verification-strip a {
+    white-space: nowrap;
+  }
+  .page-heading {
+    align-items: flex-start;
+    gap: 12px;
+  }
+  .page-heading p {
+    font-size: 12px;
+  }
+  .page-heading .button {
+    font-size: 12px;
+    padding: 6px 9px;
+  }
+  .issue-toolbar {
+    margin-bottom: 12px;
+  }
+  .filter-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+  .filter-row select {
+    min-width: 0;
+  }
+  .board-controls {
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  .board-context {
+    flex-wrap: wrap;
+    gap: 9px;
+  }
+  .issue-table th:nth-child(n + 3),
+  .issue-table td:nth-child(n + 3) {
+    display: none;
+  }
+  .issue-table th:first-child {
+    width: 68%;
+  }
+  .issue-table th:nth-child(2) {
+    width: 32%;
+  }
+  .issue-table td {
+    padding: 6px 9px;
+    height: 52px;
+  }
+  .issue-table th {
+    padding: 8px 9px;
+  }
+  .issue-title {
+    font-size: 12px;
+  }
+  .issue-key {
+    font-size: 10px;
+  }
+  .pagination {
+    flex-wrap: wrap;
+  }
+  .pagination-actions {
+    margin-left: auto;
+  }
+  .kanban {
+    margin: 0 -16px;
+    padding: 0 16px 12px;
+    grid-auto-columns: calc(100vw - 55px);
+    scroll-padding: 16px;
+  }
+  .detail-hero h1 {
+    font-size: 22px;
+    line-height: 1.35;
+  }
+  .detail-grid {
+    gap: 18px;
+  }
+  .metadata-inner {
+    padding: 14px;
+  }
+  .property {
+    font-size: 11px;
+  }
+  .owner-controls .button {
+    white-space: normal;
+    flex: 1;
+    min-height: 44px;
+  }
+  .markdown {
+    font-size: 13px;
+  }
+  .comment-top {
+    align-items: flex-start;
+  }
+  .comment-top > div {
+    flex-wrap: wrap;
+    gap: 3px;
+  }
+  .comment-content {
+    font-size: 12px;
+  }
+  .comment {
+    gap: 9px;
+  }
+  .comment .avatar {
+    width: 26px !important;
+    height: 26px !important;
+  }
+  .form-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+  .form-actions {
+    justify-content: stretch;
+  }
+  .form-actions .button {
+    flex: 1;
+    min-height: 44px;
+  }
+  .button {
+    min-height: 44px;
+  }
+  .issue-table .badge {
+    font-size: 10px;
+  }
+  .notification-popover {
+    position: fixed;
+    top: 57px;
+    right: 8px;
+    left: 8px;
+    width: auto;
+    max-height: 70vh;
+  }
+  .settings-layout {
+    display: block;
+  }
+  .settings-nav {
+    display: flex;
+    flex-direction: row;
+    overflow: auto;
+    gap: 5px;
+    border-bottom: 1px solid var(--line);
+    margin-bottom: 26px;
+  }
+  .settings-nav button {
+    white-space: nowrap;
+  }
+  .profile-stats {
+    gap: 10px;
+    grid-template-columns: repeat(3, 1fr);
+    row-gap: 23px;
+  }
+  .profile-hero {
+    gap: 12px;
+  }
+  .dialog {
+    padding: 18px;
+  }
+  .dialog-actions .button {
+    min-height: 44px;
+  }
+  .auth-page {
+    margin: 30px auto 80px;
+  }
+  .auth-sheet {
+    padding-top: 0;
+  }
+}
