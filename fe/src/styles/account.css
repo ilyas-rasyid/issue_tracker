@@ -56,14 +56,15 @@
 }
 
 .auth-foot {
-  font-size: 12px;
+  font-size: 13px;
   color: var(--muted);
-  margin: 14px 0 0;
+  margin: 28px 0 0;
+  text-align: center;
 }
 
 .auth-foot a,
 .form-between a {
-  color: var(--primary);
+  color: var(--primary-link, var(--primary));
   font-weight: 600;
 }
 

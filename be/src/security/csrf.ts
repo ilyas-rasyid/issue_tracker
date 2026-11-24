@@ -25,7 +25,10 @@ export function enforceCsrf(req: Request) {
   }
   const origin = req.headers.get('origin');
   const expected = process.env.APP_ORIGIN || 'http://localhost:5173';
-  assert(origin === expected, 403, 'CSRF_REJECTED', 'Request origin is not allowed');
+  const isAllowed =
+    origin === expected ||
+    (!prod && origin && /^http:\/\/(localhost|127\.0\.0\.1)(:\d+)?$/.test(origin));
+  assert(Boolean(isAllowed), 403, 'CSRF_REJECTED', 'Request origin is not allowed');
   const token = cookieValue(req, csrfCookie);
   const sent = req.headers.get('x-csrf-token') || '';
   assert(token.length > 45 && secureEqual(token, sent), 403, 'CSRF_REJECTED', 'Missing CSRF token');

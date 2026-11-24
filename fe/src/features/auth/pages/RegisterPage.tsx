@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Check } from 'lucide-react';
 import { useSession, broadcastAuth } from '../../../app/providers/SessionProvider';
-import { Button, Field, Notice } from '../../../shared/components/ui/index';
+import { Button, Field, Notice, PasswordInput } from '../../../shared/components/ui/index';
 import { AuthShell } from '../components/AuthShell';
 import { registerUser } from '../services/auth.service';
 
@@ -95,8 +95,7 @@ export function Register() {
           />
         </Field>
         <Field label="Password">
-          <input
-            type="password"
+          <PasswordInput
             value={form.password}
             onChange={set('password')}
             autoComplete="new-password"

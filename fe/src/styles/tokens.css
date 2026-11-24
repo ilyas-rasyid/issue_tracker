@@ -10,12 +10,13 @@
   --subtle: #7a8798;
   --line: #dce2e9;
   --hover: #f2f5f9;
-  --primary: #4f46e5;
-  --primary-hover: #4338ca;
-  --primary-text: #fff;
+  --primary: #fdb041;
+  --primary-hover: #e89e30;
+  --primary-text: #1a160d;
+  --primary-link: #b56c00;
   --danger: #bb2638;
   --success: #177245;
-  --focus: #4f46e5;
+  --focus: #fdb041;
   --radius: 6px;
 }
 
@@ -31,10 +32,11 @@
   --subtle: #8b9ab0;
   --line: #354458;
   --hover: #1a2a3f;
-  --primary: #818cf8;
-  --primary-hover: #a5b4fc;
+  --primary: #fdb041;
+  --primary-hover: #fdbe5e;
   --primary-text: #101523;
+  --primary-link: #fdb041;
   --danger: #f58b95;
   --success: #68d6a0;
-  --focus: #a5b4fc;
+  --focus: #fdb041;
 }

@@ -38,7 +38,7 @@ a {
 }
 
 a:hover {
-  color: var(--primary);
+  color: var(--primary-link, var(--primary));
 }
 
 h1,
@@ -105,7 +105,7 @@ small,
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  color: var(--primary);
+  color: var(--primary-link, var(--primary));
   font-weight: 550;
 }
 

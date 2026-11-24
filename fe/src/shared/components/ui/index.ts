@@ -8,3 +8,4 @@ export { LoadingRows } from './LoadingRows';
 export { Modal } from './Modal';
 export { InlineLink } from './InlineLink';
 export { FormActions } from './FormActions';
+export { PasswordInput } from './PasswordInput';

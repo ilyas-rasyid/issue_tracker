@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Link, useNavigate, useSearchParams } from 'react-router-dom';
 import { useSession, broadcastAuth } from '../../../app/providers/SessionProvider';
-import { Button, Field, Notice } from '../../../shared/components/ui/index';
+import { Button, Field, Notice, PasswordInput } from '../../../shared/components/ui/index';
 import { AuthShell, ValidReturn } from '../components/AuthShell';
 import { loginUser } from '../services/auth.service';
 
@@ -44,8 +44,7 @@ export function Login() {
           />
         </Field>
         <Field label="Password">
-          <input
-            type="password"
+          <PasswordInput
             autoComplete="current-password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}

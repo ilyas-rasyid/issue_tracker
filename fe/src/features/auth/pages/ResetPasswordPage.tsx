@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
-import { Button, Field, Notice } from '../../../shared/components/ui/index';
+import { Button, Field, Notice, PasswordInput } from '../../../shared/components/ui/index';
 import { AuthShell } from '../components/AuthShell';
 import { resetPassword } from '../services/auth.service';
 
@@ -38,8 +38,7 @@ export function ResetPassword() {
       ) : (
         <form className="stacked-form" onSubmit={submit}>
           <Field label="New password">
-            <input
-              type="password"
+            <PasswordInput
               autoComplete="new-password"
               minLength={6}
               required

@@ -91,7 +91,7 @@
 }
 
 .issue-cell:hover .issue-title {
-  color: var(--primary);
+  color: var(--primary-link, var(--primary));
 }
 
 .table-author {

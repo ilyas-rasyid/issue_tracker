@@ -1,6 +1,8 @@
 import type { Dispatch, SetStateAction } from 'react';
 import { Search } from 'lucide-react';
-import { keyValues, priorityLabels, statusLabels } from '../../../shared/api/index';
+import { useQuery } from '@tanstack/react-query';
+import { keyValues, priorityLabels, queryKeys, statusLabels } from '../../../shared/api/index';
+import { fetchProjects } from '../../projects/services/project.service';
 import { sortOptions } from '../constants/issue-sort-options';
 
 interface IssueBoardToolbarProps {
@@ -11,6 +13,13 @@ interface IssueBoardToolbarProps {
 }
 
 export function IssueBoardToolbar({ search, setSearch, params, update }: IssueBoardToolbarProps) {
+  const projectsQuery = useQuery({
+    queryKey: queryKeys.projects,
+    queryFn: () => fetchProjects(),
+    staleTime: 30000,
+  });
+  const projects = projectsQuery.data || [];
+
   return (
     <div className="issue-toolbar">
       <label className="search-box">
@@ -29,6 +38,18 @@ export function IssueBoardToolbar({ search, setSearch, params, update }: IssueBo
       </label>
 
       <div className="filter-row">
+        <select
+          aria-label="Filter project"
+          value={params.get('project') || ''}
+          onChange={(e) => update('project', e.target.value)}
+        >
+          <option value="">All projects</option>
+          {projects.map((p) => (
+            <option value={p.slug} key={p.id}>
+              {p.name}
+            </option>
+          ))}
+        </select>
         <select
           aria-label="Filter status"
           value={params.get('status') || ''}
